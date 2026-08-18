@@ -6,9 +6,11 @@ public class Tela1 extends JFrame {
     private JTextField[] campusNumeros;
     private JButton botao;
     private int[] num;
+
     public Tela1() {
         setSize(400, 350);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel painelPrincipal = new JPanel();
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
         painelPrincipal.add(new JLabel("Digite 8:"));
@@ -24,18 +26,33 @@ public class Tela1 extends JFrame {
         botao = new JButton("Entra");
         botao.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < 8; i++) {
-                    num[i] = Integer.parseInt(campusNumeros[i].getText());
-                }
-
-                for (int i = 0; i < 7; i++) {
-                    for (int j = 0; j < 7 - i; j++) {
-                        if (num[j] > num[j + 1]) {
-                            int temp = num[j];
-                            num[j] = num[j + 1];
-                            num[j + 1] = temp;
+                try {
+                    for (int i = 0; i < 8; i++) {
+                        if (campusNumeros[i].getText() == null || campusNumeros[i].getText().isEmpty()) {
+                            throw new Exception("Campo " + (i + 1) + " vazio");
+                        }
+                        try {
+                            Integer.parseInt(campusNumeros[i].getText());
+                        } catch (NumberFormatException ex) {
+                            throw new Exception("Campo " + (i + 1) + " nao inteiro");
                         }
                     }
+                    
+                    for (int i = 0; i < 8; i++) {
+                        num[i] = Integer.parseInt(campusNumeros[i].getText());
+                    }
+                    for (int i = 0; i < 7; i++) {
+                        for (int j = 0; j < 7 - i; j++) {
+                            if (num[j] > num[j + 1]) {
+                                int temp = num[j];
+                                num[j] = num[j + 1];
+                                num[j + 1] = temp;
+                            }
+                        }
+                    }
+                    JOptionPane.showMessageDialog(Tela1.this, "Entrou", "Entrou", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(Tela1.this, ex.getMessage(), "Erro na Entrada", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
