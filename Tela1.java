@@ -1,11 +1,12 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class Tela1 extends JFrame {
     private JTextField[] campusNumeros;
     private JButton botao;
     private int[] num;
+    private Tela2 t2;
 
     public Tela1() {
         setSize(400, 350);
@@ -37,7 +38,7 @@ public class Tela1 extends JFrame {
                             throw new Exception("Campo " + (i + 1) + " nao inteiro");
                         }
                     }
-                    
+
                     for (int i = 0; i < 8; i++) {
                         num[i] = Integer.parseInt(campusNumeros[i].getText());
                     }
@@ -51,6 +52,10 @@ public class Tela1 extends JFrame {
                         }
                     }
                     JOptionPane.showMessageDialog(Tela1.this, "Entrou", "Entrou", JOptionPane.INFORMATION_MESSAGE);
+                    t2 = new Tela2(Tela1.this); 
+                    t2.setVisible(true);
+
+                    Tela1.this.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(Tela1.this, ex.getMessage(), "Erro na Entrada", JOptionPane.ERROR_MESSAGE);
                 }
@@ -61,11 +66,13 @@ public class Tela1 extends JFrame {
         setVisible(true);
     }
 
-    public int[] getNum(){
+    public int[] getNum() {
         return this.num;
     }
-    
+
     public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
         new Tela1();
+    });
     }
 }
