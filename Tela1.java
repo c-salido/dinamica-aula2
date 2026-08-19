@@ -60,6 +60,11 @@ public class Tela1 extends JFrame {
         add(painelPrincipal);
         setVisible(true);
     }
+
+    public int[] getNum(){
+        return this.num;
+    }
+    
     public static void main(String[] args) {
         new Tela1();
     }
